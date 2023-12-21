@@ -2,15 +2,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./View.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export function View() {
   const id = useLocation().pathname.split("/").pop();
   const [view, setView] = useState({});
   const [num, setNum] = useState(1);
-
+  const [phoneNum, setPhoneNum] = useState(1);
   const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
-  console.log(products);
+  const navigate = useNavigate("");
 
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/api/v1/products/${id}/`).then((res) => {
@@ -39,29 +39,58 @@ export function View() {
             price: <span>{view.for_who}</span>
           </div>
           <div>
-            <button onClick={() => setNum(num + 1)}>+</button>
+            <button onClick={() => (num < view.stock ? setNum(num + 1) : {})}>
+              +
+            </button>
             <p>{num}</p>
             <button onClick={() => (num === 1 ? {} : setNum(num - 1))}>
               -
             </button>
           </div>
+          <input
+            type="text"
+            onChange={(e) => setPhoneNum(e.target.value)}
+            placeholder="+998(XX)XXXXXXX"
+          />
           <div>
-            <button onClick={()=>{
-              axios
-                .post("http://127.0.0.1:8000/api/v1/orders/", {
-                  product: 1,
-                  customer: 1,
-                  quantity: 1,
-                  phone_number: "+998993250628",
-                  is_paid: true,
-                })
-                .then((res) => {
-                  console.log(res);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }}>Place order</button>
+            <button
+              onClick={() => {
+                const basicAuthString = btoa(`admin:root`);
+
+                axios
+                  .post(
+                    "http://127.0.0.1:8000/api/v1/orders/",
+                    {
+                      product: view.id,
+                      customer: 1,
+                      quantity: num,
+                      phone_number: phoneNum,
+                      is_paid: true,
+                    },
+                    {
+                      headers: {
+                        Authorization: `Basic ${basicAuthString}`,
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  )
+                  .then((res) => {
+                    toast.success("Buyurtma jo'natildi");
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    if (err.response.status === 401) {
+                      toast.warn(
+                        "Buyurtmani jo'natish uchun ro'yxatdan o'ting"
+                      );
+                    } else if (err.response.status === 400) {
+                      toast.error("Noto'g'ri malumot kiritildi");
+                    }
+                  });
+              }}
+            >
+              Buy now
+            </button>
           </div>
         </div>
       </div>

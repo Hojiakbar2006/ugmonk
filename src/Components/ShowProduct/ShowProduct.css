@@ -21,6 +21,11 @@
     padding: 15px;
 }
 
+.product_container>div>div>div>span{
+    color: #f00;
+    padding-left: 10px;
+}
+
 .product_container>div:hover{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 6px;
 }

@@ -14,6 +14,8 @@ export function ShowProduct() {
           {data.map((item) => {
             const discount_price =
               item.price - (item.price / 100) * item.discount;
+            const name = item.name.split(" ").slice(1, 3);
+            console.log(name);
             return (
               <div
                 key={item.id}
@@ -25,7 +27,7 @@ export function ShowProduct() {
                   <img src={item.image} alt={item.name} />
                 </figure>
                 <div>
-                  <h3>{item.name}</h3>
+                  <h3>{name}</h3>
                   <div>
                     {item.price}{" "}
                     <span>{item.discount === 0 ? "" : discount_price}</span>
