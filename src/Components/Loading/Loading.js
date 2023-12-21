@@ -6,7 +6,7 @@ export function Loading() {
   const isLoading = useSelector((state) => state.loading);
 
   if (isLoading) {
-    document.querySelector("body").style.position = "fixed";
+    // document.querySelector("body").style.position = "fixed";
     return (
       <div className="loading">
         <div className="lds-spinner">
@@ -26,6 +26,6 @@ export function Loading() {
       </div>
     );
   } else {
-    document.querySelector("body").style.position = "";
+    // document.querySelector("body").style.position = "";
   }
 }

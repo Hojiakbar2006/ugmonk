@@ -1,0 +1,32 @@
+#view{
+    margin-bottom: 60px;
+}
+
+.view_card{
+    padding: 120px;
+}
+
+.view_card{
+    display: flex;
+    gap: 80px;
+}
+
+.view_card>div{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.view_card>figure{
+    width: 400px;
+}
+
+.view_card>figure>img{
+    width: 100%;
+}
+
+.view_card>div>div{
+    display: flex;
+    gap: 10px;
+    text-transform: capitalize;
+}

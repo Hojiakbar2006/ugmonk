@@ -1,9 +1,11 @@
 export const reCurrentCatalog = (
-  state = JSON.parse(localStorage.getItem("current_catalog")) || "All",
+  state = JSON.parse(localStorage.getItem("current_catalog")) || {
+    name: "All",
+  },
   action
 ) => {
   switch (action.type) {
-    case "CATALOG":
+    case "CURRENTCATALOG":
       return action.payload;
     default:
       return state;
@@ -12,7 +14,7 @@ export const reCurrentCatalog = (
 
 export const acCurrentCatalog = (catalog) => {
   return {
-    type: "CATALOG",
+    type: "CURRENTCATALOG",
     payload: catalog,
   };
 };

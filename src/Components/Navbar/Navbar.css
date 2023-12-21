@@ -12,6 +12,7 @@ nav > .logo {
   align-items: center;
   gap: 10px;
   color: rgba(26, 26, 26, 0.71);
+  cursor: pointer;
 }
 
 nav > .logo > h2 {

@@ -1,10 +1,11 @@
 import React from "react";
-import './ShowProduct.css'
+import "./ShowProduct.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export function ShowProduct() {
-const data = useSelector((state)=>state.product)
-
+  const data = useSelector((state) => state.product);
+  const navigate = useNavigate();
 
   return (
     <div className="ShowProduct">
@@ -14,14 +15,20 @@ const data = useSelector((state)=>state.product)
             const discount_price =
               item.price - (item.price / 100) * item.discount;
             return (
-              <div key={item.id}>
+              <div
+                key={item.id}
+                onClick={() => {
+                  navigate(`product/view/${item.id}`);
+                }}
+              >
                 <figure>
-                  <img src={item.image} alt="product_img" />
+                  <img src={item.image} alt={item.name} />
                 </figure>
                 <div>
                   <h3>{item.name}</h3>
                   <div>
-                    {item.price} <span>{discount_price}</span>
+                    {item.price}{" "}
+                    <span>{item.discount === 0 ? "" : discount_price}</span>
                   </div>
                 </div>
               </div>
