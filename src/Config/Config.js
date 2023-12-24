@@ -12,7 +12,6 @@ export function Config() {
   useEffect(() => {
     localStorage.setItem("current_catalog", JSON.stringify(CurrentCatalog));
   }, [CurrentCatalog]);
-
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/api/v1/categories/", {

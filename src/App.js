@@ -9,16 +9,20 @@ import { Loading } from './Components/Loading/Loading'
 import { Config } from './Config/Config'
 import { View } from './Pages/View/View'
 import Footer from './Components/Footer/Footer'
-import { Cart } from './Pages/Cart/Cart'
+import { Order } from './Pages/Order/Order'
+import PrivateRouters from './Utils/PrivateRouters';
+
 
 export default function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="product/view/:id" element={<View />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route element={<PrivateRouters/>}>
+          <Route path="/" element={<Home />} />
+          <Route path="product/view/:id" element={<View />} />
+          <Route path="/order" element={<Order />} />
+        </Route>
       </Routes>
       <Footer />
       <Loading />
@@ -27,7 +31,6 @@ export default function App() {
         position="bottom-left"
         autoClose={2000}
         hideProgressBar={true}
-        newestOnTop={false}
         limit={4}
         theme="colored"
       />

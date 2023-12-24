@@ -19,6 +19,7 @@ export function View() {
     });
   }, [id]);
 
+
   return (
     <div id="view">
       <div className="view_card">
@@ -36,7 +37,11 @@ export function View() {
             for who: <span>{view.for_who}</span>
           </div>
           <div>
-            price: <span>{view.for_who}</span>
+            discount price: <span>{view.price - (view.price / 100) * view.discount}</span>
+          </div>
+          <div>
+            total price:{" "}
+            <span>{(view.price - (view.price / 100) * view.discount)*num}</span>
           </div>
           <div>
             <button onClick={() => (num < view.stock ? setNum(num + 1) : {})}>
@@ -49,33 +54,33 @@ export function View() {
           </div>
           <input
             type="text"
+            value={phoneNum}
             onChange={(e) => setPhoneNum(e.target.value)}
             placeholder="+998(XX)XXXXXXX"
           />
           <div>
             <button
               onClick={() => {
-                const basicAuthString = btoa(`admin:root`);
-
                 axios
                   .post(
                     "http://127.0.0.1:8000/api/v1/orders/",
                     {
                       product: view.id,
-                      customer: 1,
+                      customer: localStorage.getItem('id'),
                       quantity: num,
                       phone_number: phoneNum,
                       is_paid: true,
                     },
                     {
                       headers: {
-                        Authorization: `Basic ${basicAuthString}`,
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
                         "Content-Type": "application/json",
                       },
                     }
                   )
                   .then((res) => {
                     toast.success("Buyurtma jo'natildi");
+                    setPhoneNum("")
                   })
                   .catch((err) => {
                     console.log(err);

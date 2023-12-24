@@ -15,7 +15,6 @@ export function ShowProduct() {
             const discount_price =
               item.price - (item.price / 100) * item.discount;
             const name = item.name.split(" ").slice(1, 3);
-            console.log(name);
             return (
               <div
                 key={item.id}
@@ -30,7 +29,7 @@ export function ShowProduct() {
                   <h3>{name}</h3>
                   <div>
                     {item.price}{" "}
-                    <span>{item.discount === 0 ? "" : discount_price}</span>
+                    <span> {item.discount === 0 ? "no" : discount_price}</span>
                   </div>
                 </div>
               </div>
